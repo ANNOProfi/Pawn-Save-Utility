@@ -1,0 +1,5 @@
+D:\ANNOP\Steam\steamapps\common\RimWorld\Mods\Pawn Save Utility\Source\Source\obj\Debug\Template.csproj.AssemblyReference.cache
+D:\ANNOP\Steam\steamapps\common\RimWorld\Mods\Pawn Save Utility\Source\Source\obj\Debug\Template.GeneratedMSBuildEditorConfig.editorconfig
+D:\ANNOP\Steam\steamapps\common\RimWorld\Mods\Pawn Save Utility\Source\Source\obj\Debug\Template.AssemblyInfoInputs.cache
+D:\ANNOP\Steam\steamapps\common\RimWorld\Mods\Pawn Save Utility\Source\Source\obj\Debug\Template.AssemblyInfo.cs
+D:\ANNOP\Steam\steamapps\common\RimWorld\Mods\Pawn Save Utility\Source\Source\obj\Debug\Template.csproj.CoreCompileInputs.cache
