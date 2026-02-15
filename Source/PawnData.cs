@@ -40,6 +40,8 @@ namespace PawnSaveUtility
 
         public PawnRoyalty royalty;
 
+        public PawnAbilities abilities;
+
         public PawnCreepJoiner creepjoiner;
 
         public string dateGenerated;
@@ -95,6 +97,9 @@ namespace PawnSaveUtility
 
             ModLog.Log("Adding title");
             royalty = new(pawn.royalty);
+
+            ModLog.Log("Adding abilities");
+            abilities = new(pawn.abilities);
 
             if(pawn.IsCreepJoiner)
             {

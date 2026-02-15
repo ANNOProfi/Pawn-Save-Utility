@@ -226,6 +226,10 @@ namespace PawnSaveUtility
                         }
                     }
                     hediff.Severity = pawnHediff.severity;
+                    if (hediff is Hediff_Level hediffLevel)
+                    {
+                        hediffLevel.level = pawnHediff.level;
+                    }
                     HediffComp_GetsPermanent hediffComp = hediff.TryGetComp<HediffComp_GetsPermanent>();
                     if(hediffComp != null)
                     {
@@ -433,6 +437,32 @@ namespace PawnSaveUtility
                     pawn.creepjoiner.rejection = creepJoinerRejection;
 
                     pawn.creepjoiner.joinedTick = GenTicks.TicksGame-pawnData.creepjoiner.joinedTicksAgo;
+                }
+            }
+
+            if(pawn.abilities != null)
+            {
+                ModLog.Log("Removing existing abilities");
+                List<Ability> abilities = pawn.abilities.AllAbilitiesForReading;
+
+                foreach(Ability ability in abilities)
+                {
+                    pawn.abilities.RemoveAbility(ability.def);
+                }
+            }
+            else
+            {
+                pawn.abilities = new Pawn_AbilityTracker(pawn);
+            }
+
+            ModLog.Log("Loading abilities");
+            foreach(string def in pawnData.abilities.abilityDefs)
+            {
+                AbilityDef abilityDef = DefDatabase<AbilityDef>.GetNamed(def);
+
+                if(abilityDef != null)
+                {
+                    pawn.abilities.GainAbility(abilityDef);
                 }
             }
 

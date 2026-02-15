@@ -10,6 +10,8 @@ namespace PawnSaveUtility
 
         public float severity;
 
+        public int level;
+
         public string sourceDef;
 
         public string bodyPartDef;
@@ -28,10 +30,17 @@ namespace PawnSaveUtility
             severity = hediff.Severity;
             sourceDef = hediff.sourceDef?.defName;
             bodyPartDef = hediff.Part?.def.defName;
+            
             HediffComp_GetsPermanent permanentComp = hediff.TryGetComp<HediffComp_GetsPermanent>();
             if(permanentComp != null)
             {
                 isPermanent = permanentComp.isPermanentInt;
+            }
+
+            if (hediff is Hediff_Level hediffLevel)
+            {
+                level = hediffLevel.level;
+                severity = level;
             }
         }
     }
