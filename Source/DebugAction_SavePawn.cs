@@ -17,36 +17,55 @@ namespace PawnSaveUtility
         {
             PawnData pawnData = new(pawn);
 
-            pawnData.SavePawn(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "PawnSaver"), pawn.Ideo);
+            if(PawnSaveUtilityMod.settings.savePath.NullOrEmpty())
+            {
+                pawnData.SavePawn(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "PawnSaver"), pawn.Ideo);
+            }
+            else
+            {
+                pawnData.SavePawn(PawnSaveUtilityMod.settings.savePath, pawn.Ideo);
+            }
+            
         }
 
         [DebugAction("Pawn Save Utility", "LoadPawn", actionType = DebugActionType.ToolMap, allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void SpawnLoadedPawn()
         {
+            IntVec3 cell = UI.MouseCell();
+
             List<DebugMenuOption> list = new List<DebugMenuOption>();
 
-            string folderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "PawnSaver");
-            string colonyPath = Path.Combine(folderPath, "New Arrivals");
+            string folderPath = PawnSaveUtilityMod.settings.savePath;
+            if(PawnSaveUtilityMod.settings.savePath.NullOrEmpty())
+            {
+                folderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "PawnSaver");
+            }
+            //string colonyPath = Path.Combine(folderPath, "New Arrivals");
             //string FileName = Path.Combine(colonyPath, "Afeeba 'Feeb' Dafo - 6th of Aprimay, 5500, 6h");
 
-            foreach(string fileName in Directory.GetFiles(colonyPath))
+            foreach(string fileName in Directory.GetFiles(folderPath, "*.xml", SearchOption.AllDirectories))
             {
-                if(fileName.Last() != 'l')
+                /*if(fileName.Last() != 'l')
                 {
                     continue;
-                }
-                ModLog.Log("File "+fileName);
-                string label = "["+colonyPath.Replace(folderPath, "").Remove(0, 1)+"] "+fileName.Replace(colonyPath, "").Remove(0, 1);
+                }*/
+                //ModLog.Log("File "+fileName);
+                string colonyPath = fileName.Remove(fileName.LastIndexOf('\\'), fileName.Length-fileName.LastIndexOf('\\'));
+                string pawnName = fileName.Replace(colonyPath+"\\", "");
+                
+                colonyPath = colonyPath.Remove(0, colonyPath.LastIndexOf('\\')+1);
+                
+                string label = "["+colonyPath+"] "+pawnName;
                 list.Add(new DebugMenuOption(label, DebugMenuOptionMode.Action, delegate
                 {
-                    LoadPawn(fileName.Remove(fileName.Length-4));
-                    ModLog.Log("Selected pawn "+fileName);
+                    LoadPawn(fileName.Remove(fileName.Length-4), cell);
+                    //ModLog.Log("Selected pawn "+pawnName);
                 }));
                 Find.WindowStack.Add(new Dialog_DebugOptionListLister(list));
             }
         }
 
-        private static void LoadPawn(string FileName)
+        private static void LoadPawn(string FileName, IntVec3 cell)
         {
             
 
@@ -465,8 +484,6 @@ namespace PawnSaveUtility
                     pawn.abilities.GainAbility(abilityDef);
                 }
             }
-
-            IntVec3 cell = UI.MouseCell();
 
             GenSpawn.Spawn(pawn, cell, Find.CurrentMap);
             pawn.Rotation = Rot4.South;

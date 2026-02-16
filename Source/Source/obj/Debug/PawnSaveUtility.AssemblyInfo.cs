@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PawnSaveUtility")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("0.1.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("0.1.0.0+04f0e43f8cca861f4032075e974cc7a55fce4e9a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("0.1.0.0+b0a9bdb975d979ecc6269c28a68539a87feb5946")]
 [assembly: System.Reflection.AssemblyProductAttribute("PawnSaveUtility")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PawnSaveUtility")]
 [assembly: System.Reflection.AssemblyVersionAttribute("0.1.0.0")]
